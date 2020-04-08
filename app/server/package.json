@@ -1,7 +1,8 @@
 {
-  "name": "server",
+  "name": "dixit-server",
   "version": "1.0.0",
-  "description": "Dixit game server",
+  "description": "Dixit server",
+  "author": "EVOSandru6",
   "private": true,
   "scripts": {
     "dev": "nodemon --exec npm run babel:node -- src/index.js",
