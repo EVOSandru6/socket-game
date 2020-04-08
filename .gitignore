@@ -1,0 +1,14 @@
+.idea
+.directory
+.env
+
+*_bak
+/**/_bak
+*.bak
+/**/.bak
+
+xxx
+/**/xxx
+
+log.txt
+nohup.out
