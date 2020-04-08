@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  frontend:
+    container_name: ${PREFIX}_frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend.${ENV}
+    volumes:
+      - ${FRONTEND_PATH_HOST}:${CONTAINER_PATH_HOST}
+    working_dir: ${CONTAINER_PATH_HOST}
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT_IN}
+    environment:
+      HOST: ${FRONTEND_HOST}
+  server:
+    container_name: ${PREFIX}_server
+    build:
+      context: .
+      dockerfile: Dockerfile.server.${ENV}
+    volumes:
+      - ${SERVER_PATH_HOST}:${CONTAINER_PATH_HOST}
+    working_dir: ${CONTAINER_PATH_HOST}
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT_IN}
+    environment:
+      PORT: ${SERVER_PORT_IN}

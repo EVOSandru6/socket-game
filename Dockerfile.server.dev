@@ -1,0 +1,10 @@
+FROM node:10.15.1
+ARG APP_DIR=/var/www
+ARG LOCAL_APP_PATH=app/server
+
+RUN mkdir -p ${APP_DIR}
+WORKDIR ${APP_DIR}
+COPY package*.json ./
+RUN npm i
+COPY ${LOCAL_APP_PATH}/package*.json ./
+EXPOSE 4000
