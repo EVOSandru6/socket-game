@@ -24,3 +24,28 @@ services:
       - ${SERVER_PORT}:${SERVER_PORT_IN}
     environment:
       PORT: ${SERVER_PORT_IN}
+  mongo:
+    container_name: ${PREFIX}_mongo
+    image: mongo:latest
+    ports:
+      - ${MONGO_DB_PORT}:27017
+    volumes:
+      - ${STORAGE_PATH}/mongo/db:/data/db
+      - ${STORAGE_PATH}/mongo/backups:/data/backups
+  pgsql:
+    container_name: ${PREFIX}_pgsql
+    image: postgres:${POSTGRES_VERSION}
+    environment:
+      - POSTGRES_USER=${POSTGRES_DB_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_DB_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DB_NAME}
+    ports:
+      - ${POSTGRES_DB_PORT}:5432
+    volumes:
+      - ${STORAGE_PATH}/postgres:/var/lib/postgresql/data
+    tty: true
+  redis:
+    container_name: ${PREFIX}_redis
+    image: redis:${REDIS_VERSION}
+    ports:
+      - ${REDIS_PORT}:6379

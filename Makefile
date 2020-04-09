@@ -34,6 +34,11 @@ endif
 
 _EXEC=$(_SUDO) docker-compose exec
 
+server-start-dev:
+	$(_EXEC) $(_SERVER_NODE) npm run server-dev;
+server-start-prod:
+	$(_EXEC) $(_SERVER_NODE) npm run server-prod
+
 init: frontend-init server-init
 
 server-init:
