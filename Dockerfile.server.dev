@@ -4,7 +4,7 @@ ARG LOCAL_APP_PATH=app/server
 
 RUN mkdir -p ${APP_DIR}
 WORKDIR ${APP_DIR}
-COPY package*.json ./
-RUN npm i
 COPY ${LOCAL_APP_PATH}/package*.json ./
+RUN npm i
+COPY . .
 EXPOSE 4000
