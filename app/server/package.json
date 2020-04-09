@@ -2,7 +2,7 @@
   "name": "dixit-server",
   "version": "1.0.0",
   "description": "Dixit server",
-  "author": "Marc Mintel <marc.mintel@i22.de> (https://i22.de)",
+  "author": "EVOSandru6",
   "private": true,
   "scripts": {
     "dev": "nodemon --exec npm run babel:node -- src/index.js",
