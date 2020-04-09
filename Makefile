@@ -38,9 +38,9 @@ frontend-start-dev:
 	$(_EXEC) $(_FRONTEND_NODE) npm run docker-dev;
 
 server-start-dev:
-	$(_EXEC) $(_SERVER_NODE) npm run server-dev;
+	$(_EXEC) $(_SERVER_NODE) npm run dev;
 server-start-prod:
-	$(_EXEC) $(_SERVER_NODE) npm run server-prod
+	$(_EXEC) $(_SERVER_NODE) npm run prod
 
 init: frontend-init server-init
 
