@@ -20,7 +20,8 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "dotenv": "^8.2.0",
     "nuxt": "^2.11.0",
-    "nuxt-i18n": "^6.6.0"
+    "nuxt-i18n": "^6.6.0",
+    "vue-socket.io": "^3.0.7"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0",
