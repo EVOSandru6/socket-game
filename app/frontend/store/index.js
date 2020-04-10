@@ -20,3 +20,9 @@ export const mutations = {
     state.users = users
   }
 };
+
+export const actions = {
+  SOCKET_hello(ctx, data) {
+    console.log('Message Recieved', data);
+  }
+};

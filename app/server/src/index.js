@@ -1,14 +1,34 @@
 const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const bodyParser = require('body-parser');
+const socket = require('socket.io');
+const cors = require('cors');
 const Users = require('./Users')();
+const app = new express();
 const port = 4000;
+const m = (name, text, id) => ({name, text, id});
 
-const m = (name, text, id) => ({ name, text, id });
+app.use(bodyParser.json());
+app.use(cors());
 
-io.on('connection', socket => {
-    console.log('Socket is connected.');
+app.get('/', async (req, res) => {
+    res.json({msg: 'We are glad to see you!'});
+});
+
+const server = app.listen(port, () => {
+    console.log("Howdy, I am running at PORT " + port)
+});
+
+const io = socket(server);
+
+io.on("connection", function (socket) {
+    console.log("Socket Connection Established with ID :" + socket.id);
+
+    socket.on('hello', name => {
+        console.log('server response.......hello', new Date());
+        socket.emit('hello', {
+            text: name
+        })
+    });
 
     socket.on('userJoined', (data, cb) => {
         if (!data.name || !data.room) {
@@ -24,7 +44,7 @@ io.on('connection', socket => {
             room: data.room
         });
 
-        cb({ userId: socket.id });
+        cb({userId: socket.id});
         io.to(data.room).emit('updateUsers', Users.getByRoom(data.room));
         socket.emit('newMessage', m('admin', `Добро пожаловать ${data.name}.`));
         socket.broadcast
@@ -67,9 +87,3 @@ io.on('connection', socket => {
         }
     })
 });
-
-app.get('/', function(req, res) {
-    res.send('We are happy to see you!');
-});
-
-app.listen(port);
