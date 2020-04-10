@@ -23,10 +23,11 @@ const io = socket(server);
 io.on("connection", function (socket) {
     console.log("Socket Connection Established with ID :" + socket.id);
 
-    socket.on('hello', name => {
+    socket.on('hello', (name, country) => {
         console.log('server response.......hello', new Date());
         socket.emit('hello', {
-            text: name
+            name: name,
+            country: country
         })
     });
 

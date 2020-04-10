@@ -4,7 +4,7 @@
             <v-card min-width="400">
                 <v-snackbar v-model="snackbar" :timeout="6000" top>
                     {{ message }}
-                    <v-btn color="pink" flat @click="snackbar = false">Закрыть</v-btn>
+                    <v-btn color="pink" text @click="snackbar = false">Закрыть</v-btn>
                 </v-snackbar>
 
                 <v-card-title>
@@ -61,6 +61,8 @@
             }
 
             this.snackbar = !!this.message;
+
+            this.socketInit();
         },
         methods: {
             ...mapMutations(["setUser"]),
@@ -84,8 +86,14 @@
             },
             socketTest() {
                 console.log('socketTest');
-                this.$socket.emit("hello", 'andrey');
+                this.$socket.emit("hello", 'andrey', 'russia');
+            },
+            socketInit() {
+                this.sockets.subscribe('hello', (data) => {
+                    alert(data.name);
+                });
             },
         }
-    };
+    }
+    ;
 </script>
