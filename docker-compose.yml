@@ -1,0 +1,62 @@
+version: '3.7'
+services:
+  frontend:
+    container_name: ${PREFIX}_frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend.${ENV}
+    volumes:
+      - ${FRONTEND_PATH_HOST}:${CONTAINER_PATH_HOST}
+    working_dir: ${CONTAINER_PATH_HOST}
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT_IN}
+    environment:
+      HOST: ${FRONTEND_HOST}
+    restart: always
+    tty: true
+  server:
+    container_name: ${PREFIX}_server
+    build:
+      context: .
+      dockerfile: Dockerfile.server.${ENV}
+    volumes:
+      - ${SERVER_PATH_HOST}:${CONTAINER_PATH_HOST}
+    working_dir: ${CONTAINER_PATH_HOST}
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT_IN}
+    environment:
+      PORT: ${SERVER_PORT_IN}
+    restart: always
+    tty: true
+  pgsql:
+    container_name: ${PREFIX}_pgsql
+    image: postgres:${POSTGRES_VERSION}
+    environment:
+      - POSTGRES_USER=${POSTGRES_DB_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_DB_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DB_NAME}
+    ports:
+      - ${POSTGRES_DB_PORT}:5432
+    volumes:
+      - ${STORAGE_PATH}/postgres:/var/lib/postgresql/data
+    restart: always
+    tty: true
+  mongo:
+    container_name: ${PREFIX}_mongo
+    image: mongo:latest
+    ports:
+      - ${MONGO_DB_PORT}:27017
+    volumes:
+      - ${STORAGE_PATH}/mongo/db:/data/db
+      - ${STORAGE_PATH}/mongo/backups:/data/backups
+    restart: always
+    tty: true
+  redis:
+    container_name: ${PREFIX}_redis
+    image: redis:${REDIS_VERSION}
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - ${STORAGE_PATH}/redis/db:/data
+    restart: always
+    tty: true
