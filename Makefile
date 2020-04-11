@@ -36,8 +36,6 @@ _EXEC=$(_SUDO) docker-compose exec
 
 frontend-start-dev:
 	$(_EXEC) $(_FRONTEND_NODE) npm run docker-dev;
-frontend-server-start:
-	$(_EXEC) $(_FRONTEND_NODE) npm run server-start;
 
 server-start-dev:
 	$(_EXEC) $(_SERVER_NODE) npm run dev;

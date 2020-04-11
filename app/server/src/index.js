@@ -47,7 +47,9 @@ io.on("connection", function (socket) {
         };
         Users.add(newUser);
         cb({userId: socket.id});
+
         // io.to(data.room).emit('setUser', newUser);
+
         io.to(data.room).emit('updateUsers', Users.getByRoom(data.room));
         socket.emit('newMessage', m('admin', `Добро пожаловать ${data.name}.`));
         socket.broadcast
