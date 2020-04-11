@@ -29,17 +29,21 @@
 
 <script>
     import {mapMutations} from "vuex";
+    // todo tmp
+    import {mapState} from "vuex";
 
     export default {
         layout: "empty",
         head: {
-            title: "Добро пожаловать в Dixit"
+            title: "Главная"
         },
         sockets: {
             connect: function () {
                 console.log("socket connected");
             }
         },
+        // todo tmp
+        computed: mapState(["user"]),
         data: () => ({
             valid: true,
             snackbar: false,
@@ -73,13 +77,19 @@
                         room: this.room
                     };
 
+                    // this.$socket.emit("userJoined", user);
+                    // this.$router.push("/chat");
+
                     this.$socket.emit("userJoined", user, data => {
+                        console.log('userJoined callback');
                         if (typeof data === "string") {
                             console.error(data);
                         } else {
                             user.id = data.userId;
                             this.setUser(user);
+                            console.log('this.user', this.user);
                             this.$router.push("/chat");
+                            // setTimeout(() => this.$router.push("/chat"), 1000)
                         }
                     });
                 }
@@ -95,5 +105,4 @@
             },
         }
     }
-    ;
 </script>

@@ -7,15 +7,15 @@
             <v-list subheader>
                 <v-subheader>Список людей в комнате</v-subheader>
 
-                <v-list-tile v-for="u in users" :key="u.id" @click.prevent>
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{u.name}}</v-list-tile-title>
-                    </v-list-tile-content>
+                <v-list-item v-for="u in users" :key="u.id" @click.prevent>
+                    <v-list-item-content>
+                        <v-list-item-title>{{u.name}}</v-list-item-title>
+                    </v-list-item-content>
 
-                    <v-list-tile-action>
-                        <v-icon :color="u.id === user.id ? 'primary' : 'grey'">chat_bubble</v-icon>
-                    </v-list-tile-action>
-                </v-list-tile>
+                    <v-list-item-action>
+                        <v-icon :color="u.id === user.id ? 'primary' : 'grey'">mdi-message-text</v-icon>
+                    </v-list-item-action>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
 
@@ -32,6 +32,7 @@
         <v-content>
             <v-container>
                 <nuxt/>
+                user.room: {{ user.room }} <hr> users: {{ users }}
             </v-container>
         </v-content>
 
@@ -53,9 +54,10 @@
                 clipped: false,
                 drawer: false,
                 fixed: false,
-                title: `Чат комнаты ${this.user.room}`
+                title: `Чат комнаты ${JSON.stringify(this?.user?.room)}` // ?.room
             }
         },
+        computed: mapState(['user', 'users']),
         methods: {
             ...mapMutations(["clearData"]),
             exit() {
@@ -64,6 +66,11 @@
                     this.clearData();
                 });
             }
-        }
+        },
+        user: function (val) {
+            console.log('watch for user_____________');
+
+            this.title = `Чат комнаты ${this.user.room}`
+        },
     }
 </script>

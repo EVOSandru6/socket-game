@@ -32,20 +32,22 @@ io.on("connection", function (socket) {
     });
 
     socket.on('userJoined', (data, cb) => {
+    // socket.on('userJoined', (data) => {
         if (!data.name || !data.room) {
             return cb('Данные некорректны');
         }
 
         socket.join(data.room);
-
         Users.remove(socket.id);
-        Users.add({
+
+        const newUser = {
             id: socket.id,
             name: data.name,
             room: data.room
-        });
-
+        };
+        Users.add(newUser);
         cb({userId: socket.id});
+        // io.to(data.room).emit('setUser', newUser);
         io.to(data.room).emit('updateUsers', Users.getByRoom(data.room));
         socket.emit('newMessage', m('admin', `Добро пожаловать ${data.name}.`));
         socket.broadcast
